@@ -1,0 +1,22 @@
+# Rust often needs a bit of an extra main task stack size compared to C (the default is 3K)
+# You might have to increase this further if you allocate large stack variables in the main task
+CONFIG_ESP_MAIN_TASK_STACK_SIZE=8192
+
+# Increase a bit these stack sizes as they are also a bit too small by default
+CONFIG_ESP_SYSTEM_EVENT_TASK_STACK_SIZE=4096
+CONFIG_FREERTOS_IDLE_TASK_STACKSIZE=4096
+
+# You might have to increase this further if you spawn your own Rust threads 
+# that allocate large stack variables; or better yet - use 
+# `std::thread::Builder::new().stack_size(XXX)` for spawning
+CONFIG_PTHREAD_TASK_STACK_SIZE_DEFAULT=4096
+
+# Two OTA app slots need more than the default 2 MB flash layout.
+# Two OTA app slots with large partition size (1700KB each)
+CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
+CONFIG_ESPTOOLPY_FLASHSIZE="4MB"
+
+# Keep the running image while downloading the next firmware image.
+CONFIG_PARTITION_TABLE_TWO_OTA=y
+CONFIG_PARTITION_TABLE_TWO_OTA_LARGE=y
+CONFIG_BOOTLOADER_APP_ROLLBACK_ENABLE=y

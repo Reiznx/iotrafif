@@ -1,0 +1,35 @@
+[package]
+name = "esp32_mqtt_dummy"
+version = "0.1.0"
+edition = "2021"
+resolver = "2"
+
+[[bin]]
+name = "esp32_mqtt_dummy"
+harness = false
+
+[profile.release]
+opt-level = "s"
+
+[profile.dev]
+debug = true
+opt-level = "z"
+
+[dependencies]
+log = "0.4"
+esp-idf-svc = { version = "0.52.1", features = ["binstart"] }
+embedded-svc = "0.29.0"
+anyhow = "1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10"
+
+[build-dependencies]
+embuild = "0.33.5"
+
+# Catatan setup:
+# 1. Scaffold project baru dengan: `cargo generate esp-rs/esp-idf-template cargo`
+#    lalu ganti isi src/main.rs dan Cargo.toml ini.
+# 2. Pastikan `sdkconfig.defaults` mengaktifkan mbedTLS / crt bundle (default sudah aktif
+#    di template terbaru) supaya koneksi TLS ke HiveMQ (port 8883) berjalan.
+# 3. Flash dengan `cargo run --release`.
